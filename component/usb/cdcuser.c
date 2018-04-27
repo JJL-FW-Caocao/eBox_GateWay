@@ -473,7 +473,24 @@ void CDC2_InBufChar(char dat)
 		CDC2_BulkIn();
 	}
 }
-
+int CDC2_InBufWrite(char* dat,int len)
+{
+    int i;
+    char *p = dat;
+    if(len > 64)
+        return 0;
+    for(i = 0; i < len; i++)
+    {
+        if(!CDC_BUF_FULL(CDC2_InBuf))
+            CDC_BUF_WR(CDC2_InBuf,*p++);
+    }
+	if(CDC2_DepInEmpty)
+	{
+		CDC2_DepInEmpty = 0;
+		CDC2_BulkIn();
+	}
+    return len;
+}
 static CDC_BUF_T CDC2_OutBuf;
 static volatile unsigned char CDC2_DepOutPending = 0;
 void CDC2_BulkOut(void)

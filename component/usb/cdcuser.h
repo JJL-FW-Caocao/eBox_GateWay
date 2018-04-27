@@ -53,6 +53,7 @@ char CDC1_OutBufChar(void);
 void CDC2_InBufChar(char dat);
 int  CDC2_OutBufLength(void);
 int  CDC2_OutBufRead (char *buffer, int length);
+int  CDC2_InBufWrite(char* dat,int len);
 char CDC2_OutBufChar(void);
 
 void CDC3_InBufChar(char dat);

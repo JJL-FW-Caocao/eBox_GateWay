@@ -31,25 +31,28 @@
 /*----------------------------------------------------------------------------
   MAIN function
  *----------------------------------------------------------------------------*/
+#include <stdio.h>
 
 #include "ebox.h"
 #include "usbreg.h"
 Timer timer(TIM2);
-uint8_t i = 0;
 void test()
 {
-    i++;
-    if(i == 5)
-    {
-        PB9.toggle();
-        if(terminal_connected)
-            CDC2_InBufChar('9');
-        i = 0;
-    }
+    PB9.toggle();
+//    
+//    if(terminal_connected)
+//    {
+//        CDC2_InBufWrite((char *)"1234567890\r\n",12);
+//    }
+
+
 }
+char buf[100];
 int main (void) 
 {
 	unsigned int d;
+    int i;
+    int size;
     ebox_init();
 	stm32_Init();                                     /* STM32 Initialization */
 	USB_Init();                                        /* USB Initialization */
@@ -71,7 +74,16 @@ int main (void)
         }
 		else
 			PB8.reset();
+            
+    if(terminal_connected)
+    {
         
+        size = sprintf(buf,"%d\r\n", i);
+
+        CDC2_InBufWrite((char *)buf,size);
+    }
+    i++;
+    //delay_ms(1);
 //        CDC2_InBufChar('9');
 //        PB8.toggle();
 	}
