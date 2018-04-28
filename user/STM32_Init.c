@@ -2186,7 +2186,7 @@
 //     </e>
 //   </e>
 // </e> End of USART Configuration
-#define __USART_SETUP             1                       //  0
+#define __USART_SETUP             0                       //  0
 #define __USART_USED              0x07                    //  1
 #define __USART_DETAILS           0x00					  //  2
 #define __USART_INTERRUPTS        0x07					  //  3

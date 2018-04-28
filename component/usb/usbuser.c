@@ -168,8 +168,9 @@ void (* const USB_P_EP[16]) (U32 event) = {
  *   Called automatically on USB Endpoint 1 Event
  *    Parameter:       event
  */
-
+#include "stm32f10x.h"
 void USB_EndPoint1 (U32 event) {
+
 }
 
 
@@ -184,6 +185,14 @@ void USB_EndPoint2 (U32 event) {
 	{
 	case USB_EVT_OUT:
 		CDC1_BulkOut ();                /* data received from Host */
+//        if(terminal_connected)
+//        {
+//            if(CDC1_OutBufLength())
+//            {
+//                USART2->DR = CDC1_OutBufChar();
+//            }
+//        }
+    //虚拟串口1的接收数据中断
 		break;
 	case USB_EVT_IN:
 		CDC1_BulkIn ();                 /* data expected from Host */
@@ -199,6 +208,7 @@ void USB_EndPoint2 (U32 event) {
  */
 
 void USB_EndPoint3 (U32 event) {
+
 }
 
 
@@ -213,6 +223,13 @@ void USB_EndPoint4 (U32 event) {
 	{
 	case USB_EVT_OUT:
 		CDC2_BulkOut ();                /* data received from Host */
+        if(terminal_connected)
+        {
+            if(CDC2_OutBufLength())
+            {
+                USART2->DR = CDC2_OutBufChar();
+            }
+        }
 		break;
 	case USB_EVT_IN:
 		CDC2_BulkIn ();                 /* data expected from Host */
@@ -242,7 +259,14 @@ void USB_EndPoint6 (U32 event) {
 	{
 	case USB_EVT_OUT:
 		CDC3_BulkOut ();                /* data received from Host */
-		break;
+        if(terminal_connected)
+        {
+            if(CDC3_OutBufLength())
+            {
+                USART3->DR = CDC3_OutBufChar();
+            }
+        }
+        break;
 	case USB_EVT_IN:
 		CDC3_BulkIn ();                 /* data expected from Host */
 		break;

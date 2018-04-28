@@ -36,17 +36,53 @@
 #include "ebox.h"
 #include "usbreg.h"
 Timer timer(TIM2);
-void test()
+extern callback_fun_type EP_evnent[3];
+
+//void uart1_rx_event()
+//{
+//    PB9.toggle();
+////    
+//    if(terminal_connected)
+//    {        
+//        CDC1_InBufChar(uart1.read());
+//    }
+//}
+
+void timer_event()
 {
     PB9.toggle();
 //    
-//    if(terminal_connected)
-//    {
-//        CDC2_InBufWrite((char *)"1234567890\r\n",12);
-//    }
+    if(terminal_connected)
+    {   
+        CDC1_InBufWrite((char*) "123\r\n",5);
+    }
+}
+
+
+void uart2_rx_event()
+{
+    PB9.toggle();
+//    
+    if(terminal_connected)
+    {        
+        CDC2_InBufChar(uart2.read());
+    }
+}
+
+
+void uart3_rx_event()
+{
+    PB9.toggle();
+    if(terminal_connected)
+    {
+        
+        CDC3_InBufChar(uart3.read());
+    }
 
 
 }
+
+
 char buf[100];
 int main (void) 
 {
@@ -61,27 +97,44 @@ int main (void)
     PB8.mode(OUTPUT_PP);
     PB9.mode(OUTPUT_PP);
     
-	timer.begin(100);
-    timer.attach(test);
+	timer.begin(1);
+    timer.attach(timer_event);
     timer.interrupt(ENABLE);
     timer.start();
-	while (1)                                         /* Loop forever */
-	{
-		d = Uart_Task();
-		if(d < 0xffff)
-        {
-			PB8.set();
-        }
-		else
-			PB8.reset();
-            
-    if(terminal_connected)
-    {
+    
+//    uart1.begin(115200);
+//    uart1.attach(uart1_rx_event,RxIrq);
+//    uart1.interrupt(RxIrq,ENABLE);
+  
+    uart2.begin(115200);
+    uart2.attach(uart2_rx_event,RxIrq);
+    uart2.interrupt(RxIrq,ENABLE);
+    
+    uart3.begin(115200);
+    uart3.attach(uart3_rx_event,RxIrq);
+    uart3.interrupt(RxIrq,ENABLE);
+    
+    
+    
+    while (1)                                         /* Loop forever */
         
-        size = sprintf(buf,"%d\r\n", i);
 
-        CDC2_InBufWrite((char *)buf,size);
-    }
+	{
+//		d = Uart_Task();
+//		if(d < 0xffff)
+//        {
+//			PB8.set();
+//        }
+//		else
+//			PB8.reset();
+            
+//    if(terminal_connected)
+//    {
+//        
+//        size = sprintf(buf,"%d\r\n", i);
+
+//        CDC2_InBufWrite((char *)buf,size);
+//    }
     i++;
     //delay_ms(1);
 //        CDC2_InBufChar('9');

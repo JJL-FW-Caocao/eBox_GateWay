@@ -155,9 +155,9 @@ mcuGpio PG15(GPIOG, GPIO_Pin_15);
 #endif
 
 //´®¿Ú
-//Uart uart1(USART1, &PA9, &PA10);
-//Uart uart2(USART2, &PA2, &PA3);
-//Uart uart3(USART3, &PB10, &PB11);
+Uart uart1(USART1, &PA9, &PA10);
+Uart uart2(USART2, &PA2, &PA3);
+Uart uart3(USART3, &PB10, &PB11);
 
 #if (MCU_PIN_NUM >= 100)
 Uart uart4(UART4, &PC10, &PC11);

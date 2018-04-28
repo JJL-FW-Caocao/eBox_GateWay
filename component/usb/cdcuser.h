@@ -46,14 +46,15 @@ extern void CDC3_BulkOut                 (void);
 
 /* FIFO Functions */
 void CDC1_InBufChar(char dat);
+int CDC1_InBufWrite(char* dat,int len);
 int  CDC1_OutBufLength(void);
 int  CDC1_OutBufRead (char *buffer, int length);
 char CDC1_OutBufChar(void);
 
 void CDC2_InBufChar(char dat);
+int  CDC2_InBufWrite(char* dat,int len);
 int  CDC2_OutBufLength(void);
 int  CDC2_OutBufRead (char *buffer, int length);
-int  CDC2_InBufWrite(char* dat,int len);
 char CDC2_OutBufChar(void);
 
 void CDC3_InBufChar(char dat);
