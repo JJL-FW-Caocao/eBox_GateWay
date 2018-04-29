@@ -10,11 +10,16 @@ ebox_fifo_init
 
  */
 
-struct ebox_fifo *ebox_fifo_init(unsigned char *buffer,unsigned int size)
+struct ebox_fifo *ebox_fifo_init(unsigned char *buffer,unsigned int want_size)
 {
     struct ebox_fifo *fifo;
+    unsigned int size = 2;
 
-    fifo = malloc(sizeof(struct ebox_fifo));
+    do{
+        size *=2;
+     }while(size < want_size);
+    
+    fifo = ebox_malloc(sizeof(struct ebox_fifo));
     if (!fifo)
     return NULL;
 
@@ -29,14 +34,19 @@ struct ebox_fifo *ebox_fifo_init(unsigned char *buffer,unsigned int size)
  /*
  ebox_fifo_alloc
 */
- struct ebox_fifo *ebox_fifo_alloc(unsigned int size)
+ struct ebox_fifo *ebox_fifo_alloc(unsigned int want_size)
  {
      unsigned char *buffer;
      struct ebox_fifo *ret;
+     unsigned int size = 2;
      /*
      * round up to the next power of 2, since our 'let the indices
      * wrap' tachnique works only in this case.
      */
+     
+     do{
+        size *=2;
+     }while(size < want_size);
      
      buffer = ebox_malloc(size);
      if (!buffer)

@@ -16,12 +16,11 @@ struct ebox_fifo
     unsigned int out;/* data is extracted from off. (out % size)*/
 };
 
-struct ebox_fifo  *ebox_fifo_init(unsigned char *buffer,unsigned int size);
-struct ebox_fifo  *ebox_fifo_alloc(unsigned int size);
+struct ebox_fifo  *ebox_fifo_init(unsigned char *buffer,unsigned int want_size);
+struct ebox_fifo  *ebox_fifo_alloc(unsigned int want_size);
 void            ebox_fifo_free(struct ebox_fifo *fifo);
 unsigned int    ebox_fifo_put(struct ebox_fifo *fifo, unsigned char *buffer, unsigned int len);
 unsigned int    ebox_fifo_get(struct ebox_fifo *fifo, unsigned char *buffer, unsigned int len);
-
 
 
 #ifdef __cplusplus

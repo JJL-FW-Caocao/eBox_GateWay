@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\ebox\hardware\cortex-m3;..\..\..\ebox\hardware\cortex-m3\Peripherals;..\..\..\ebox\core;..\..\..\ebox\core\mem;..\..\..\component;..\..\..\component\edriver;..\..\..\component\apps;..\..\..\mcuLib\stm32f10x\libraries\STM32F10x_StdPeriph_Driver\inc;..\..\..\mcuLib\stm32f10x\libraries\CMSIS\CM3\CoreSupport;..\..\..\mcuLib\stm32f10x\libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\..\..\component\lwip\lwip-2.0.2\src\include;..\..\..\component\lwip;..\..\..\component\lwip\ebox;..\..\..\component\usb_device_stack\USBDevice;..\..\..\component\usb_device_stack\USBSerial;..\..\..\component\usb;..\..\..\user</IncludePath>
+              <IncludePath>..\..\..\ebox\hardware\cortex-m3;..\..\..\ebox\hardware\cortex-m3\Peripherals;..\..\..\ebox\core;..\..\..\ebox\core\mem;..\..\..\component;..\..\..\component\apps;..\..\..\mcuLib\stm32f10x\libraries\STM32F10x_StdPeriph_Driver\inc;..\..\..\mcuLib\stm32f10x\libraries\CMSIS\CM3\CoreSupport;..\..\..\mcuLib\stm32f10x\libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x;..\..\..\component\usb_device_stack\USBDevice;..\..\..\component\usb_device_stack\USBSerial;..\..\..\component\usb;..\..\..\user;..\..\..\component\ddc;..\..\..\ebox\core\math</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -746,6 +746,31 @@
               <FileName>usbuser.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\component\usb\usbuser.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ddc</GroupName>
+          <Files>
+            <File>
+              <FileName>ddc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\component\ddc\ddc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ddc_port.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\component\ddc\ddc_port.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>listc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\component\ddc\listc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ddc_user.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\component\ddc\ddc_user.cpp</FilePath>
             </File>
           </Files>
         </Group>

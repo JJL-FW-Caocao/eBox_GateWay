@@ -35,18 +35,14 @@
 
 #include "ebox.h"
 #include "usbreg.h"
+
+#include "ddc_port.h"
+#include "ddc.h"
+#include "listc.h"
 Timer timer(TIM2);
 extern callback_fun_type EP_evnent[3];
 
-//void uart1_rx_event()
-//{
-//    PB9.toggle();
-////    
-//    if(terminal_connected)
-//    {        
-//        CDC1_InBufChar(uart1.read());
-//    }
-//}
+
 
 void timer_event()
 {
@@ -81,6 +77,7 @@ void uart3_rx_event()
 
 
 }
+extern DdcNode_t list_send;
 
 
 char buf[100];
@@ -90,36 +87,68 @@ int main (void)
     int i;
     int size;
     ebox_init();
-	stm32_Init();                                     /* STM32 Initialization */
-	USB_Init();                                        /* USB Initialization */
-	CDC_Init();
-	USB_Connect(__TRUE);
-    PB8.mode(OUTPUT_PP);
-    PB9.mode(OUTPUT_PP);
+//	stm32_Init();                                     /* STM32 Initialization */
+//	USB_Init();                                        /* USB Initialization */
+//	CDC_Init();
+//	USB_Connect(__TRUE);
+//    PB8.mode(OUTPUT_PP);
+//    PB9.mode(OUTPUT_PP);
+//    
+//	timer.begin(1);
+//    timer.attach(timer_event);
+//    timer.interrupt(ENABLE);
+//    timer.start();
     
-	timer.begin(1);
-    timer.attach(timer_event);
-    timer.interrupt(ENABLE);
-    timer.start();
-    
-//    uart1.begin(115200);
+    uart1.begin(115200);
 //    uart1.attach(uart1_rx_event,RxIrq);
 //    uart1.interrupt(RxIrq,ENABLE);
   
-    uart2.begin(115200);
-    uart2.attach(uart2_rx_event,RxIrq);
-    uart2.interrupt(RxIrq,ENABLE);
+//    uart2.begin(115200);
+//    uart2.attach(uart2_rx_event,RxIrq);
+//    uart2.interrupt(RxIrq,ENABLE);
+//    
+//    uart3.begin(115200);
+//    uart3.attach(uart3_rx_event,RxIrq);
+//    uart3.interrupt(RxIrq,ENABLE);
+
+     ddc_init();
+    ddc_get_char(0x55);
+    ddc_get_char(0xaa);//头
+    ddc_get_char(0x07);
+    ddc_get_char(0x00);//len
+    ddc_get_char(0xff);
+    ddc_get_char(0xff);//id
+    ddc_get_char(0x01);//质量
+    ddc_get_char(0x02);//类型
+    ddc_get_char(0x03);//用户数据
     
-    uart3.begin(115200);
-    uart3.attach(uart3_rx_event,RxIrq);
-    uart3.interrupt(RxIrq,ENABLE);
+ 
+    ddc_get_char(0x12);
+    ddc_get_char(0x34);//crc
+    
+    uint8_t data[5] = {0x03,0X04,0x05,0X06,0X07};
+
+
+
+//    DdcNode_t* node;
+//    node = list;
+//    while(node != NULL)
+//    {
+//        uart1.printf("id = %d\r\n",node->id);
+//        node = node->next;
+//    }
     
     
     
+    i=0;
     while (1)                                         /* Loop forever */
         
 
 	{
+        ddc_recv_process();
+    make_frame(data,50,0,1);
+//    make_frame(data,5,1,1);
+//    make_frame(data,5,1,1);
 //		d = Uart_Task();
 //		if(d < 0xffff)
 //        {
@@ -135,8 +164,8 @@ int main (void)
 
 //        CDC2_InBufWrite((char *)buf,size);
 //    }
-    i++;
-    //delay_ms(1);
+    uart1.println(i++);
+    delay_ms(1);
 //        CDC2_InBufChar('9');
 //        PB8.toggle();
 	}

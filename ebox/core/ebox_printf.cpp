@@ -26,7 +26,7 @@ void ebox_printf(const char *fmt, ...)
     }while(size1 == -1);
 
     va_end(va_params);
-//    uart1.write(buf,size1);
+    uart1.write(buf,size1);
     ebox_free(buf);
 
 }
