@@ -6,7 +6,6 @@
 DdcNode_t* list_creat_node(uint8_t *p)
 {
     DdcNode_t *newNode;
-    ebox_printf("[list] get free:%d\r\n",ebox_get_free());   
     newNode = (DdcNode_t*)ebox_malloc(sizeof(DdcNode_t));
     if (newNode == NULL) 
     {
@@ -14,7 +13,7 @@ DdcNode_t* list_creat_node(uint8_t *p)
         return NULL;
     } else
     {
-        ebox_printf("[list]creat list\t get free:%d\r\n",ebox_get_free());
+//        ebox_printf("[list]creat list\t get free:%d\r\n",ebox_get_free());
         newNode->p = p;
         newNode->time = 0;
         newNode->state = 0; 
@@ -55,7 +54,7 @@ void list_delete_by_val(DdcNode_t *head, uint16_t id)
         {
             //delete target node
             pre->next = cur->next;
-            ebox_printf("[list]id=%d delete success\t get free:%d\r\n",temp.value,ebox_get_free());
+//            ebox_printf("[list...]id=%d delete success\t get free:%d\r\n",temp.value,ebox_get_free());
             ebox_free(cur->p);
 //            ebox_printf("free frame buffer ok!get free = %d\r\n",ebox_get_free());
             ebox_free(cur);

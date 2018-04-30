@@ -143,39 +143,41 @@ int main (void)
     
 //    i=0;
     
-    uint8_t buf1[100];
+    uint8_t buf1[100] = {0x06,0X07,0x08,0X09,0X0A};
     uint8_t buf2[100];
-    uint8_t buf3[100];
+    uint8_t buf3[100] = {0x01,0X02,0x03,0X04,0X05};
     uint16_t len;
     while (1)                                         /* Loop forever */
 
 
 	{
         //make_frame(data,5,1,1);
-        uart1.printf("----------问----------------------\r\n");
-        len = make_frame1(buf1,data,5,1,1);
+        uart1.printf("----------创建消息----------------------\r\n");
+        len = make_frame(buf1,data,5,1,1);
         add_to_list(buf1);
-        len = make_frame1(buf3,data,5,0,1);
+//        len = make_frame1(buf1,data,5,1,1);
+//        add_to_list(buf1);
+        len = make_frame(buf3,data,5,0,1);
         add_to_list(buf3);
-        uart1.printf("----------------------------------\r\n");
+        uart1.printf("----------------------------------------\r\n");
+        
+        
+        uart1.printf("----------发送消息----------------------\r\n");
+        frame_send(&list_send);
+        uart1.printf("----------------------------------------\r\n");
+        
+        uart1.printf("----------检查需要回复的列表------------\r\n");
+        check_ack_list();
+         uart1.printf("---------------------------------------\r\n");
+       
+        
+        uart1.printf("----------模拟接收----------------------\r\n");
         len = make_ack_frame(buf2,get_id_frome_frame(buf1));
         for(int i = 0; i < len; i++)
             ddc_get_char(buf2[i]);
-        
-        
-        uart1.printf("----------发送----------------------\r\n");
-    frame_send(&list_send);
-        uart1.printf("----------------------------------\r\n");
-        
-        uart1.printf("----------检查需要回复的列表----------------------\r\n");
-    check_ack_list();
-         uart1.printf("--------------------------------\r\n");
-       
-        
-        uart1.printf("----------答----------------------\r\n");
-    for(i = 0; i < 50; i++)
-        ddc_recv_process();
-        uart1.printf("-------------------------------\r\n");
+        for(i = 0; i < 50; i++)
+            ddc_recv_process();
+        uart1.printf("----------------------------------------\r\n");
 
 //        ddc_loop();
        // ddc_recv_process();

@@ -23,9 +23,8 @@ void ddc_loop();
 
 void ddc_recv_process();
 void analyze_payload();
-void make_frame(uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
 void frame_retry(DdcNode_t *p);
-uint16_t make_frame1(uint8_t *dsc,uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
+uint16_t make_frame(uint8_t *dsc,uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
 void add_to_list(uint8_t *buf);
 uint16_t make_ack_frame(uint8_t *dsc,uint16_t id);
 
