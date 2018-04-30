@@ -172,7 +172,7 @@ void ebox_free( void *pv )
 	}
 
 }
-size_t ebox_get_free(  )
+size_t ebox_get_free(void)
 {
     return FreeBytesRemaining;
 }
@@ -244,17 +244,17 @@ static void insert_block_into_freeList( eboxBlockLink_t *pxBlockToInsert)
 
     
 }
-size_t ebox_get_sram_start_addr()
+size_t ebox_get_sram_start_addr(void)
 {
     return (size_t)MEM_ALIGN((uint32_t)STM32_SRAM_BEGIN);
 }
 
-size_t ebox_get_sram_end_addr()
+size_t ebox_get_sram_end_addr(void)
 {
     return (size_t)MEM_ALIGN((uint32_t)STM32_SRAM_END);
 }
 
-uint16_t ebox_free_block_print()
+uint16_t ebox_free_block_print(void)
 {
     eboxBlockLink_t *p;
     uint32_t temp;

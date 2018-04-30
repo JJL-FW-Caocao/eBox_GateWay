@@ -83,9 +83,6 @@ extern DdcNode_t list_send;
 char buf[100];
 int main (void) 
 {
-	unsigned int d;
-    int i;
-    int size;
     ebox_init();
 //	stm32_Init();                                     /* STM32 Initialization */
 //	USB_Init();                                        /* USB Initialization */
@@ -142,23 +139,46 @@ int main (void)
 //    uart1.print(sizeof(DdcNode_t));
     
 //    i=0;
+//    DdcFrame_t frame1;
+//    frame1.type = 1;
+//    frame1.ack  = 1;
+//    frame1.payload_len = 5;
     
-    uint8_t buf1[100] = {0x06,0X07,0x08,0X09,0X0A};
-    uint8_t buf2[100];
-    uint8_t buf3[100] = {0x01,0X02,0x03,0X04,0X05};
+    uint8_t bufr1[100] = {0x06,0X07,0x08,0X09,0X0A};
+    uint8_t bufr2[100];
+    uint8_t bufr3[100] = {0x01,0X02,0x03,0X04,0X05};
+    uint8_t buft1[100] = {0x06,0X07,0x08,0X09,0X0A};
+    uint8_t buft2[100];
+    uint8_t buft3[100] = {0x01,0X02,0x03,0X04,0X05};
     uint16_t len;
+//    len = make_frame1(buf1,data,5,1,1);
+//    for(int i = 0; i < len; i++)
+//        ddc_get_char(buf1[i]);
+//    
+//    len = make_frame1(buf1,data,5,1,1);
+//    for(int i = 0; i < len; i++)
+//        ddc_get_char(buf1[i]);
+
+//    
+//    len = make_ack_frame1(buf1,12);
+//    for(int i = 0; i < len; i++)
+//        ddc_get_char(buf1[i]);
+//    while(1)
+//    {
+//    ddc_recv_process();
+//    }
+
     while (1)                                         /* Loop forever */
-
-
 	{
+        
         //make_frame(data,5,1,1);
         uart1.printf("----------创建消息----------------------\r\n");
-        len = make_frame(buf1,data,5,1,1);
-        add_to_list(buf1);
-//        len = make_frame1(buf1,data,5,1,1);
-//        add_to_list(buf1);
-        len = make_frame(buf3,data,5,0,1);
-        add_to_list(buf3);
+        len = make_frame(buft1,data,100,1,1);
+        add_to_list(buft1);
+        len = make_frame(buft2,data,50,1,1);
+        add_to_list(buft2);
+        len = make_frame(buft3,data,5,0,1);
+        add_to_list(buft3);
         uart1.printf("----------------------------------------\r\n");
         
         
@@ -172,10 +192,13 @@ int main (void)
        
         
         uart1.printf("----------模拟接收----------------------\r\n");
-        len = make_ack_frame(buf2,get_id_frome_frame(buf1));
+        len = make_ack_frame(bufr1,get_id_frome_frame(buft1));
         for(int i = 0; i < len; i++)
-            ddc_get_char(buf2[i]);
-        for(i = 0; i < 50; i++)
+            ddc_get_char(bufr1[i]);
+//        len = make_ack_frame(bufr2,get_id_frome_frame(buft2));
+//        for(int i = 0; i < len; i++)
+//            ddc_get_char(bufr2[i]);
+        for(int i = 0; i < 50; i++)
             ddc_recv_process();
         uart1.printf("----------------------------------------\r\n");
 

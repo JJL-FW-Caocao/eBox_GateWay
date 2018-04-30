@@ -11,7 +11,6 @@
 typedef struct DdcNode
 {
     uint8_t    time;
-    uint8_t   state;
     uint8_t *p;
     struct DdcNode *next;
 }DdcNode_t;  

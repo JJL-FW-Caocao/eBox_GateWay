@@ -7,10 +7,12 @@
      
 //#include "stdio.h"
 #include "fifo.h"
-#define DDC_MAX_LENGTH 64
-
+     
+#define DDC_MAX_FRAME_LENGTH   128
+#define DDC_MAX_PAYLOAD_LENGTH  (DDC_MAX_FRAME_LENGTH - 9)
+     
+     
 extern struct ebox_fifo *fifo_recv;
-extern struct ebox_fifo *fifo_payload;
 
 
 void ddc_init();

@@ -2,12 +2,10 @@
 #include "ebox.h"
 struct ebox_fifo *fifo_recv;
 
-struct ebox_fifo *fifo_payload;
 
 void ddc_init()
 {
-    fifo_recv = ebox_fifo_alloc(DDC_MAX_LENGTH);
-    fifo_payload = ebox_fifo_alloc(DDC_MAX_LENGTH);
+    fifo_recv = ebox_fifo_alloc(DDC_MAX_FRAME_LENGTH * 2);
 
 }
 void ddc_get_char(uint8_t ch)

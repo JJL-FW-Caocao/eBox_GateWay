@@ -16,7 +16,6 @@ DdcNode_t* list_creat_node(uint8_t *p)
 //        ebox_printf("[list]creat list\t get free:%d\r\n",ebox_get_free());
         newNode->p = p;
         newNode->time = 0;
-        newNode->state = 0; 
         newNode->next = NULL;
         return newNode;
     }
@@ -50,7 +49,7 @@ void list_delete_by_val(DdcNode_t *head, uint16_t id)
 
     while(cur)
     {
-        if ((cur->p[4] == temp.byte[0]) && (cur->p[5] == temp.byte[1]))
+        if ((cur->p[2] == temp.byte[0]) && (cur->p[3] == temp.byte[1]))
         {
             //delete target node
             pre->next = cur->next;
