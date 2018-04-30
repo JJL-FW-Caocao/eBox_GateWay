@@ -112,23 +112,23 @@ int main (void)
 //    uart3.interrupt(RxIrq,ENABLE);
 
      ddc_init();
-    ddc_get_char(0x55);
-    ddc_get_char(0xaa);//头
-    ddc_get_char(0x07);
-    ddc_get_char(0x00);//len
-    ddc_get_char(0xff);
-    ddc_get_char(0xff);//id
-    ddc_get_char(0x01);//质量
-    ddc_get_char(0x02);//类型
-    ddc_get_char(0x03);//用户数据
-    
- 
-    ddc_get_char(0x12);
-    ddc_get_char(0x34);//crc
-    
+//    ddc_get_char(0x55);
+//    ddc_get_char(0xaa);//头
+//    ddc_get_char(0x07);
+//    ddc_get_char(0x00);//len
+//    ddc_get_char(0x0);
+//    ddc_get_char(0x0);//id
+//    ddc_get_char(0x00);//质量
+//    ddc_get_char(0xff);//类型
+//    ddc_get_char(0x03);//用户数据
+//    
+// 
+//    ddc_get_char(0x6c);//crc
+//    ddc_get_char(0x31);
+//    
     uint8_t data[5] = {0x03,0X04,0x05,0X06,0X07};
 
-
+//    make_frame(data,10,1,1);
 
 //    DdcNode_t* node;
 //    node = list;
@@ -139,14 +139,47 @@ int main (void)
 //    }
     
     
+//    uart1.print(sizeof(DdcNode_t));
     
-    i=0;
+//    i=0;
+    
+    uint8_t buf1[100];
+    uint8_t buf2[100];
+    uint8_t buf3[100];
+    uint16_t len;
     while (1)                                         /* Loop forever */
-        
+
 
 	{
+        //make_frame(data,5,1,1);
+        uart1.printf("----------问----------------------\r\n");
+        len = make_frame1(buf1,data,5,1,1);
+        add_to_list(buf1);
+        len = make_frame1(buf3,data,5,0,1);
+        add_to_list(buf3);
+        uart1.printf("----------------------------------\r\n");
+        len = make_ack_frame(buf2,get_id_frome_frame(buf1));
+        for(int i = 0; i < len; i++)
+            ddc_get_char(buf2[i]);
+        
+        
+        uart1.printf("----------发送----------------------\r\n");
+    frame_send(&list_send);
+        uart1.printf("----------------------------------\r\n");
+        
+        uart1.printf("----------检查需要回复的列表----------------------\r\n");
+    check_ack_list();
+         uart1.printf("--------------------------------\r\n");
+       
+        
+        uart1.printf("----------答----------------------\r\n");
+    for(i = 0; i < 50; i++)
         ddc_recv_process();
-    make_frame(data,50,0,1);
+        uart1.printf("-------------------------------\r\n");
+
+//        ddc_loop();
+       // ddc_recv_process();
+//        make_frame(data,10,0,1);
 //    make_frame(data,5,1,1);
 //    make_frame(data,5,1,1);
 //		d = Uart_Task();
@@ -164,8 +197,8 @@ int main (void)
 
 //        CDC2_InBufWrite((char *)buf,size);
 //    }
-    uart1.println(i++);
-    delay_ms(1);
+//    uart1.println(i++);
+//    delay_ms(1);
 //        CDC2_InBufChar('9');
 //        PB8.toggle();
 	}

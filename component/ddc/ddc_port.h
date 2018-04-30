@@ -14,9 +14,9 @@ extern struct ebox_fifo *fifo_payload;
 
 
 void ddc_init();
-void ddc_get_char(unsigned char ch);
-int ddc_send_char(unsigned char ch);
-int ddc_send_buf(unsigned char* buf, int buflen);
+void ddc_get_char(uint8_t ch);
+uint16_t ddc_send_char(uint8_t ch);
+uint16_t ddc_send_buf(uint8_t* buf, uint16_t buflen);
 
 #ifdef __cplusplus
 }

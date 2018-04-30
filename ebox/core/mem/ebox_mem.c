@@ -128,7 +128,7 @@ void *ebox_malloc( size_t xWantedSize )
     {
         ebox_printf("bad mem malloc!!!\r\n");
     }
-    
+
 	return pvReturn;
 }
 void ebox_free( void *pv )

@@ -18,10 +18,12 @@ struct ebox_fifo *ebox_fifo_init(unsigned char *buffer,unsigned int want_size)
     do{
         size *=2;
      }while(size < want_size);
-    
+    ebox_printf("[fifo] get free:%d\r\n",ebox_get_free());   
+
     fifo = ebox_malloc(sizeof(struct ebox_fifo));
     if (!fifo)
     return NULL;
+    ebox_printf("mem malloc = %d\r\n",size);
 
     fifo->buffer = buffer;
     fifo->size = size;
@@ -49,6 +51,8 @@ struct ebox_fifo *ebox_fifo_init(unsigned char *buffer,unsigned int want_size)
      }while(size < want_size);
      
      buffer = ebox_malloc(size);
+     ebox_printf("fifo alloc:mem malloc = %d\r\n",size);
+
      if (!buffer)
      return NULL;
      

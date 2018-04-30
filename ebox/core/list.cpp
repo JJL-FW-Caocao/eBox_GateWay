@@ -29,6 +29,7 @@
 int List::insert_head(void *data)
 {
     Node *node_new;
+    
     if((node_new = (Node *)ebox_malloc(sizeof(Node))) == NULL )
         return -1;
     
