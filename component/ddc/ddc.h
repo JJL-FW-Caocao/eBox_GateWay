@@ -10,9 +10,10 @@
 #include "stdio.h"
 #include "mcu_core.h"
 #include "ddc_port.h"
-#include "listc.h"
+#include "ddc_list.h"
      
-  
+typedef void (*DdcCallBack_t)(uint8_t *ptr, uint16_t len );
+
 typedef enum 
 {
     UNLOCK,
@@ -32,37 +33,36 @@ typedef struct
 
 #define PAY2FRAME_LEN(x) (x + 10)
 
+//用户API接口
+void        ddc_loop(void);
+uint16_t    ddc_make_frame(uint8_t *dst,uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
+uint16_t    ddc_make_ack_frame(uint8_t *dst,uint16_t id);
+void        ddc_add_to_list(uint8_t *buf);
+uint16_t    ddc_frame_to_buf(uint8_t *dst,DdcFrame_t *frame);
+uint16_t    ddc_buf_to_frame(DdcFrame_t *frame,uint8_t *src);
+void        ddc_attach_type0(DdcCallBack_t callback);
+void        ddc_send_list(DdcNode_t *p);
 
 
 
-uint16_t ddc_frame_to_buf(uint8_t *dst,DdcFrame_t *frame);
-uint16_t make_frame(uint8_t *dsc,uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
-uint16_t make_ack_frame(uint8_t *dsc,uint16_t id);
-//uint16_t make_frame1(uint8_t *dst,uint8_t *data,uint16_t data_len,uint8_t ack,uint8_t type );
-//uint16_t make_ack_frame1(uint8_t *dst,uint16_t id);
-void analyze_frame(DdcFrame_t *frame);
 
-
-void ddc_loop(void);
-
-void ddc_recv_process(void);
-void frame_retry(DdcNode_t *p);
-void add_to_list(uint8_t *buf);
-
-uint16_t get_len_frome_frame(uint8_t *frame);
-uint16_t get_id_frome_frame(uint8_t *frame);
-uint8_t get_ack_frome_frame(uint8_t *frame);
-uint8_t get_type_frome_frame(uint8_t *frame);
-void print_frame(uint8_t *frame);
-void print_list(DdcNode_t *list);
-
-
-void frame_send(DdcNode_t *p);
-void check_ack_list(void);
+//内部接口
+void        ddc_recv_process(void);
+void        ddc_retry(DdcNode_t *p);
+void        ddc_analyze_frame(DdcFrame_t *frame);
+uint16_t    get_frame_payload_len(uint8_t *frame);
+uint16_t    get_frame_id(uint8_t *frame);
+uint8_t     get_frame_ack(uint8_t *frame);
+uint8_t     get_frame_type(uint8_t *frame);
+void        print_frame(uint8_t *frame);
+void        print_list(DdcNode_t *list);
+void        ddc_check_ack_list(void);
 
 #ifdef __cplusplus
-}
+    }
 #endif
 
-#endif
+#endif 
+
+
  
